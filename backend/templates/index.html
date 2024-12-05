@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IP Subnet Validation</title>
+  <style>
+    .input-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .input-box {
+      width: 50px;
+      text-align: center;
+      margin: 0 5px;
+      padding: 5px;
+      font-size: 18px;
+    }
+    .dot, .slash {
+      font-size: 24px;
+      margin: 0 5px;
+    }
+    .submit-btn {
+      display: block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .clear-field-btn{
+      display: block;
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #0041f5;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .clear-events-btn{
+      display: block;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #f500f1;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .clear-ips-btn{
+      display: block;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #f40a3c;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    .submit-btn:hover {
+      background-color: #419645;
+    }
+    .clear-field-btn:hover {
+      background-color: #21169a;
+    }
+    .clear-events-btn:hover {
+      background-color: #d505bd;
+    }
+    .clear-ips-btn:hover {
+      background-color: #aa0306;
+    }
+    .validation-message {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #000000; 
+    }
+    .clear-message {
+      margin-top: 20px;
+      font-size: 18px;
+      color: #000000;
+    }
+  </style>
+</head>
+<body>
+  <h2>Enter IP Address and Subnet Mask</h2>
+  <form method="POST" action="/">
+    <div class="input-container">
+      <input type="number" class="input-box" min="0" max="255" name="ip_address_part1" value="{{ ip_address.split('.')[0] if ip_address else '' }}">
+      <span class="dot">.</span>
+      <input type="number" class="input-box" min="0" max="255" name="ip_address_part2" value="{{ ip_address.split('.')[1] if ip_address else '' }}">
+      <span class="dot">.</span>
+      <input type="number" class="input-box" min="0" max="255" name="ip_address_part3" value="{{ ip_address.split('.')[2] if ip_address else '' }}">
+      <span class="dot">.</span>
+      <input type="number" class="input-box" min="0" max="255" name="ip_address_part4" value="{{ ip_address.split('.')[3] if ip_address else '' }}">
+      <span class="slash">/</span>
+      <input type="number" class="input-box" min="0" max="32" name="subnet_mask" value="{{ subnet_mask if subnet_mask else '' }}">
+    </div>
+    <button class="submit-btn" type="submit">Submit</button>
+  </form>
+  <form method="POST" action="/clear-field">
+    <div class="input-container">
+      <button class="clear-field-btn" type="submit">Clear IP subnet fields</button>
+    </div>
+  </form>
+  <form method="POST" action="/clear-events">
+    <div class="input-container">
+      <button class="clear-events-btn" type="submit">Clear Event database</button>
+    </div>
+  </form>
+  <form method="POST" action="/clear-ips">
+    <div class="input-container">
+      <button class="clear-ips-btn" type="submit">Clear IP database</button>
+    </div>
+  </form>
+
+  
+  <!-- Validation message -->
+  {% if validation_message %}
+    <p class="validation-message">{{ validation_message }}</p>
+  {% endif %}
+
+  {% if clear_message %}
+    <p class="clear-message">{{ clear_message }}</p>
+  {% endif %}
+</body>
+</html>
